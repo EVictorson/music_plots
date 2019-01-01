@@ -371,31 +371,25 @@ def calc_all_notes(input_scale):
 	return freq_arr
 
 def main():
-	# =============== DIATONIC==================
 
-	# notes below piano sub-contra octave 
-	# negative 1 octave (should be inaudible to humans)
-	#do_1 = ['C-1', 'D-1', 'E-1', 'F-1', 'G-1', 'A-1', 'B-1']				# C-1
-	
+	# =============== DIATONIC SCALE==================
 	# note: standard 88 key piano range is A0 - C8
-																						# helmholtz name
-	#do0 = ['C0','D0','E0','F0','G0','A0','B0']	# C,, 		sub-contra octave C0		marks the low end of human hearing, only A0, B0 keys on piano
-	#do1 = ['C1','D1','E1','F1','G1','A1','B1']	# C, 			contra octave C1
-	#do2 = ['C2','D2','E2','F2','G2','A2','B2']	#	C 			great octave	C2
-	#do3 = ['C3','D3','E3','F3','G3','A3','B3']	# c 			small octave	C3
-	#do4 = ['C4','D4','E4','F4','G4','A4','B4']	# c' 			1-line octave (middle c)						C4
-	#do5 = ['C5','D5','E5','F5','G5','A5','B5']	# c" 			2-line octave (tenor c)							C5
-	#do6 = ['C6','D6','E6','F6','G6','A6','B6']	# c"' 		3-line octave (soprano c (high c))	C6
-	#do7 = ['C7','D7','E7','F7','G7','A7','B7']	# c"" 		4-line octave (double high c)				C7
-	#do8 = ['C8','D8','E8','F8','G8','A8','B8']	# c""' 		5-line octave (eighth octave)				C8
+	# helmholtz name
+	# negative 1 octave (should be inaudible to humans) # C-1
+	# C,, 		sub-contra octave C0		marks the low end of human hearing, only A0, B0 keys on piano
+	# C, 			contra octave C1
+	#	C 			great octave	C2
+	# c 			small octave	C3
+	# c' 			1-line octave (middle c)						C4
+	# c" 			2-line octave (tenor c)							C5
+	# c"' 		3-line octave (soprano c (high c))	C6
+	# c""			4-line octave (double high c)				C7
+	# c""' 		5-line octave (eighth octave)				C8
 	
 	# notes above piano eighth octive
-	#do9 = ['C9','D9','E9','F9','G9','A9','B9']												# C9
-	#do10 = ['C10','D10','E10','F10','G10','A10','B10']								# C10
+	# C9
+	# C10
  	
-	# Fundamental Frequencies
-	# notes below piano sub-contra octave
-	
 	#				C					D				E				F				G				A				B
 	df_1 = [8.1758, 9.1770, 10.301, 10.914, 12.250, 13.750, 15.434]
 	all_diatonic_notes = calc_all_notes(df_1)
@@ -408,6 +402,7 @@ def main():
 	diatonic_middle_c = all_diatonic_notes[34:44]
 	diatonic_middle_c_names = diatonic_note_names[34:44]
 
+	# plot diatonic scale
 	plt.plot(np.arange(len(diatonic_middle_c)), diatonic_middle_c,'-o')
 	ax = plt.gca()
 	ax.xaxis.set_ticks(np.arange(len(diatonic_middle_c_names)))
@@ -426,10 +421,15 @@ def main():
 	plt.grid()
 	plt.show()
 
-	plt.semilogy(np.arange(len(diatonic_middle_c)), diatonic_middle_c,'-o')
+	# plot diatonic scale with semilog axes
+	plt.plot(np.arange(len(diatonic_middle_c)), diatonic_middle_c,'-o')
 	ax = plt.gca()
-	ax.xaxis.set_ticks(np.arange(len(diatonic_middle_c_names)))
-	ax.xaxis.set_ticklabels(diatonic_middle_c_names, rotation=90)
+	ax.set_yscale('log')
+	ax.set_yticks([200,300,400,500,600])
+	ax.get_yaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
+	ax.set_xticks(np.arange(len(diatonic_middle_c_names)))
+	ax.set_xticklabels(diatonic_middle_c_names, rotation=90)
+	plt.ylim([200,600])
 	plt.xlabel("Notes")
 	plt.ylabel("Frequency (logarithmic hz)")	
 	plt.title("Diatonic C Major Scale")
@@ -437,24 +437,22 @@ def main():
 	plt.show()
 
 
-	#============= CHROMATIC ================
+	#============= CHROMATIC SCALE ================
 	
 	# note: standard 88 key piano range is A0 - C8
-	# for reference, notes will be structured:																																									# helmholtz name
-	#co_1 =  ['C-1', 'Cs-1','D-1', 'Ds-1', 'E-1', 'F-1', 'Fs-1', 'G-1','Gs-1', 'A-1', 'As-1', 'B-1']
-	#co0 = ['C0', 'Cs0','D0', 'Ds0', 'E0', 'F0', 'Fs0', 'G0','Gs0', 'A0', 'As0', 'B0']	# C,, 		sub-contra octave C0		marks the low end of human hearing, only A0, B0 keys on piano
-	#co1 = ['C1', 'Cs1','D1', 'Ds1', 'E1', 'F1', 'Fs1', 'G1','Gs1', 'A1', 'As1', 'B1']	# C, 			contra octave C1
-	#co2 = ['C2', 'Cs2','D2', 'Ds2', 'E2', 'F2', 'Fs2', 'G2','Gs2', 'A2', 'As2', 'B2']	#	C 			great octave	C2
-	#co3 = ['C3', 'Cs3','D3', 'Ds3', 'E3', 'F3', 'Fs3', 'G3','Gs3', 'A3', 'As3', 'B3']	# c 			small octave	C3
-	#co4 = ['C4', 'Cs4','D4', 'Ds4', 'E4', 'F4', 'Fs4', 'G4','Gs4', 'A4', 'As4', 'B4']	# c' 			1-line octave (middle c)						C4
-	#co5 = ['C5', 'Cs5','D5', 'Ds5', 'E5', 'F5', 'Fs5', 'G5','Gs5', 'A5', 'As5', 'B5']	# c" 			2-line octave (tenor c)							C5
-	#co6 = ['C6', 'Cs6','D6', 'Ds6', 'E6', 'F6', 'Fs6', 'G6','Gs6', 'A6', 'As6', 'B6']	# c"' 		3-line octave (soprano c (high c))	C6
-	#co7 = ['C7', 'Cs7','D7', 'Ds7', 'E7', 'F7', 'Fs7', 'G7','Gs7', 'A7', 'As7', 'B7']	# c"" 		4-line octave (double high c)				C7
-	#co8 = ['C8', 'Cs8','D8', 'Ds8', 'E8', 'F8', 'Fs8', 'G8','Gs8', 'A8', 'As8', 'B8']	# c""' 		5-line octave (eighth octave)				C8
-	#co9=  ['C9', 'Cs9','D9', 'Ds9', 'E9', 'F9', 'Fs9', 'G9','Gs9', 'A9', 'As9', 'B9']
+	# helmholtz name
+	# everything below this is just for science (-1 octave)
+	# C,, 		sub-contra octave C0		marks the low end of human hearing, only A0, B0 keys on piano
+	# C, 			contra octave C1
+	#	C 			great octave	C2
+	# c 			small octave	C3
+	# c' 			1-line octave (middle c)						C4
+	# c" 			2-line octave (tenor c)							C5
+	# c"' 		3-line octave (soprano c (high c))	C6
+	# c"" 		4-line octave (double high c)				C7
+	# c""' 		5-line octave (eighth octave)				C8
+	# everything above this is just for science	(9 and 10 octave)
 
-	#note_names = co_1 + co0 + co1 + co2 + co3 + co4 + co5 + co6 + co7 + co8 + co9 + c10		
-	
 	# Fundamental frequencies:
 	#				C				Cs				D				Ds			E				F				Fs			G				Gs			A				As			B	
 	cf_1 = [8.1758, 8.6620, 9.1770, 9.7227, 10.301, 10.914, 11.563, 12.250, 12.979, 13.750, 14.568, 15.434];
@@ -473,6 +471,7 @@ def main():
 	x = np.linspace(0,13,14)
 	y = root*(np.power(2,x/12))
 
+	# plot chromatic scale
 	plt.plot(np.arange(len(middle_c)), middle_c,'-o', markersize = 12)
 	plt.plot(x,y,'go--')
 	ax = plt.gca()
@@ -495,7 +494,8 @@ def main():
 	plt.text(11.5, middle_c[11], "S", fontsize=12)
 	plt.grid()
 	plt.show()
-
+	
+	# plot chromatic scale on semilog plot
 	plt.figure()
 	plt.plot(np.arange(len(middle_c)), middle_c,'-o')
 	ax = plt.gca()
@@ -526,15 +526,12 @@ def main():
 	plt.show()
 
 	# to convert to wavelength 
-	c = 34300 # (cm/s)
+	#c = 343 # (m/s)
 	#wavelength = c / all_notes; 
 
-# formulaic representation of frequency of the nth key
-#ff = 2^((n-49)/12) * 440 # (hz), key 49 being A4 (middle A))
+	# formulaic representation of frequency of the nth key
+	#ff = 2^((n-49)/12) * 440 # (hz), key 49 being A4 (middle A))
 	
-
-
-
 	###### plot C major chords #######
 	chords_dict = chords('c')
 
@@ -597,7 +594,6 @@ def main():
 	plt.ylabel('Intervals (semitones)')
 	plt.show()
 	
-	#c_chord_note_names = note_names[60:82]
 	# finally, plot in terms of note name
 	plt.figure
 	plt.hold(True)
@@ -621,7 +617,7 @@ def main():
 	plt.show()
 
 	# quick little plot to show frequency content of the i-v-vi-iv chord progression
-
+	# plot 4 chord progression in terms of frequency content
 	all_chords_dict = chords('all')
 	four_chord_prog = ['C ','G ','Am','F ']
 
@@ -649,6 +645,7 @@ def main():
 	plt.show()
 
 
+	# plot 4 chord progression in terms of note names
 	plt.figure()
 	plt.hold(True)
 	idx = 0
@@ -668,8 +665,6 @@ def main():
 	plt.title('I-V-VI-IV C major Chord Progression')
 	plt.ylabel('Note Name')
 	plt.show()
-
-
 
 
 if __name__ == '__main__':
