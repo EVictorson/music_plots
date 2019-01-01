@@ -1,11 +1,19 @@
 #!/usr/bin/env python
 
-# script to plot musical scale
+## @file plot_musical_notes.py
+#	 @brief script to plot musical scales
+#	 
+#	 script to generate all possible notes for the chromatic and diatonic scales
+#	 Will also plot scales, chords, chord progressions, and eventually songs 
+#
+#	 @author eric victorson
+#  @date 2019_01_01
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import matplotlib.ticker
 
+##	super long music theory notes section
 # different methods of musical pitch notation:
 # 1) scientific pitch notation (ISO 16, A440 hz, using concert pitch of 440hz for A above middle C)
 # 2) scientific pitch (verdi tuning or philosophical pitch) - all Cs are integer powers of 2, C4 = 256 hz
@@ -184,6 +192,9 @@ import matplotlib.ticker
 
 # is pythagorean tuning worth mentioning?
 
+## @brief chords generate chords
+#	 @param range individual range, such as C, or all
+#	 @return chord_dict dictionary of chords, where keys are chord name, and values are lists of pitches in the chord
 def chords(range):
 
 	# note: standard 88 key piano range is A0 - C8
@@ -244,7 +255,7 @@ def chords(range):
 	eleventh 					= 17
 	thirteenth 				= 21
 
-	# chords
+	# chord intervals
 	i0 = [root, major_third, perfect_fifth]																											# C
 	i1 = [root, minor_third, perfect_fifth]																											# Cm
 	i2 = [root, major_third, perfect_fifth, minor_seventh]																			# C7
@@ -281,8 +292,6 @@ def chords(range):
 	c_chord_frequencies = calc_chord_freqs(chord_names, chord_intervals, root_note_c4, notes_dict, all_notes)
 
 	# populate chord_frequencies list with all frequencies for all notes from the first to seventh scale degree of middle c major
-	
-	# it looks like the issue may be here
 	# will return a list: list[[c_chords], [cs_chords],.., [b_chords]]
 	# where c_chords is a list, and each entry in c_chords is a list.  list of lists of lists
 	for root_note in middle_c_chromatic:
@@ -341,7 +350,11 @@ def calc_chord_freqs(chord_names, chord_intervals, root_note, notes_dict, all_no
 	# the chord_frequencies list should now contain a list of all frequencies present for each chord
 	return chord_frequencies
  
-
+##	@brief combine prefixes and suffixes for creating all notes
+#		@param prefixes note or chord prefixes, such as 'A','As','B',...
+#		@param suffixes note or chord suffixes, such as '0','1','2',... or 'm','7','m7','maj7',... etc
+#		@param order dictates if the prefixes should be iterated over first or suffixes
+#		@return combined list
 def combine_prefix_suffix(prefixes, suffixes, order):
 	combined = [];
 	if order == 'prefixes_first':
@@ -358,11 +371,17 @@ def combine_prefix_suffix(prefixes, suffixes, order):
 
 	return combined
 
-
+##	@brief calculate octaves
+#		@param input_pitch the input pitch
+#		@param num_octaves the number of octaves above input pitch to calc
+#		@return freq returned octave pitch
 def calc_octave(input_pitch, num_octaves):
 	freq = input_pitch * np.power(2,num_octaves)
 	return freq
 
+##	@brief calculate all notes and their corresponding frequencies from an input octave list
+#		@param input_scale input list of notes in a starting octave, usually -1 octave
+# 	@return freq_arr	list of all calculated frequencies
 def calc_all_notes(input_scale):
 	freq_arr=[]
 	for i in range(0,len(input_scale)):
@@ -370,6 +389,7 @@ def calc_all_notes(input_scale):
 			freq_arr.append(calc_octave(note, float(i)))	
 	return freq_arr
 
+##	@brief main do all the things (mostly plotting)
 def main():
 
 	# =============== DIATONIC SCALE==================
