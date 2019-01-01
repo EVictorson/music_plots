@@ -406,7 +406,7 @@ def main():
 	# c""			4-line octave (double high c)				C7
 	# c""' 		5-line octave (eighth octave)				C8
 	
-	# notes above piano eighth octive
+	# notes above piano eighth octave
 	# C9
 	# C10
  	
